@@ -2,9 +2,12 @@ from numpy import mat, sum, array, arange, square
 from numpy.linalg import solve
 from matplotlib import pyplot as graph
 from CustomMatT import diag_mat2
+from pandas import read_csv
 
-x = array([1,2,3,4])
-y = array([1,4,9,16])
+data = read_csv(r'../Database/demo.csv')
+
+x = array(data['x'])
+y = array(data['y'])
 
 graph.scatter(x,y)
 
@@ -20,7 +23,8 @@ predict = lambda x : sum((p[i] * (x ** (degree - i)) for i in range(degree + 1))
 
 L = arange(0,max(x) + 1, 0.1)
 
-print("Cost : ", sum(square(y - predict(x))))
+print("Cost : ", sum(square(y - predict(x))) / len(y))
+print("Parameter : {}".format(p))
 
 graph.plot(L,predict(L).T)
 
